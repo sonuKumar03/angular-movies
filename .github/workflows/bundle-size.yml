@@ -28,11 +28,12 @@ jobs:
         run: npm ci --engine-strict=false
 
       - name: Build Head with Stats
-        run: npx nx build movies --configuration production --stats-json
+        run: npx nx build movies --configuration production --stats-json --no-budgets
 
       - name: Run BundleCheck Action
         uses: sonuKumar03/bundlecheck@v0
         with:
           project: movies
-          build-cmd: npx nx build movies --configuration production --stats-json
+          build-cmd: npx nx build movies --configuration production --stats-json --no-budgets
+          max-initial: 390KB
           post-comment: true

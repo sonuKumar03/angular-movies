@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import MovieDetailPageComponent from './pages/movie-detail-page/movie-detail-page.component';
 
 export const ROUTES: Routes = [
   /**
@@ -25,6 +26,7 @@ export const ROUTES: Routes = [
    *  loadComponent: import('list.component')
    *  }
    *
+   * _Bad Dev Mistake Example:_ Eagerly loaded detail route
    */
   {
     path: 'list/:type/:identifier',
@@ -34,8 +36,7 @@ export const ROUTES: Routes = [
   },
   {
     path: 'detail/movie/:identifier',
-    loadComponent: () =>
-      import('./pages/movie-detail-page/movie-detail-page.component'),
+    component: MovieDetailPageComponent,
   },
   {
     path: 'detail/list/:identifier',
