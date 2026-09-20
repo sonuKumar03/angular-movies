@@ -1,0 +1,36 @@
+name: Bundle Size Guard
+
+on:
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  bundlecheck:
+    name: Validate Bundle Size & PR Diff
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR Head
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Head with Stats
+        run: npx nx build movies --configuration production --stats-json
+
+      - name: Run BundleCheck Action
+        uses: sonuKumar03/bundlecheck@v0
+        with:
+          project: movies
+          build-cmd: npx nx build movies --configuration production --stats-json
+          post-comment: true
