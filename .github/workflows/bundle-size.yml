@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout PR Head
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -23,7 +25,7 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --engine-strict=false
 
       - name: Build Head with Stats
         run: npx nx build movies --configuration production --stats-json
